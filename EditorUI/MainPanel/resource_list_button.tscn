@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://EditorUI/MainPanel/resource_list_button.gd" id="1_gd"]
+[ext_resource type="Theme" path="res://Theme/UI_Theme.tres" id="2_thm"]
+
+[node name="ResourceListButton" type="Control" unique_id=987654321]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_gd")
+
+[node name="Button" type="Button" parent="." unique_id=123456789]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_thm")
+expand_icon = true
+alignment = 1

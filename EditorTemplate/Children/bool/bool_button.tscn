@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dni7yh2x4srv0"]
+
+[ext_resource type="PackedScene" uid="uid://bb5apdnbq3htl" path="res://EditorTemplate/Protocol/protocol.tscn" id="1_vot4d"]
+[ext_resource type="Script" uid="uid://cmu8dbnculjid" path="res://EditorTemplate/Children/bool/bool_button.gd" id="2_lcilh"]
+
+[node name="BoolButton" unique_id=1329382132 instance=ExtResource("1_vot4d")]
+script = ExtResource("2_lcilh")
+
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="1" unique_id=277744782]
+unique_name_in_owner = true
+layout_mode = 2

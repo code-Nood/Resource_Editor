@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://o8j1wg7eq3wq"]
+
+[ext_resource type="PackedScene" uid="uid://bb5apdnbq3htl" path="res://EditorTemplate/Protocol/protocol.tscn" id="1_4b080"]
+[ext_resource type="Script" uid="uid://cp1xl6b27iep3" path="res://EditorTemplate/Children/res/resource_picker.gd" id="2_cyumv"]
+
+[node name="ResPicker" unique_id=1329382132 instance=ExtResource("1_4b080")]
+script = ExtResource("2_cyumv")
+
+[node name="Button" type="Button" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="1" unique_id=1771812591]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30

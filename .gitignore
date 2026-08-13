@@ -1,0 +1,22 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Editor import 产物
+*.import
+
+# 用户数据（程序自动生成、含个人数据，不推送到库）
+Data/
+
+# 导出输出目录
+Export/
+
+# 本地 IDE / 工具配置
+.vscode/
+
+# 插件目录（暂不纳入版本管理）
+addons/
+
+# 系统临时文件
+.DS_Store
+Thumbs.db

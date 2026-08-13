@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://h46sr23ailq1"]
+
+[ext_resource type="PackedScene" uid="uid://bb5apdnbq3htl" path="res://EditorTemplate/Protocol/protocol.tscn" id="1_pjuyv"]
+[ext_resource type="Script" uid="uid://bq5s1nhbm5q1s" path="res://EditorTemplate/Children/spin/spinbox.gd" id="2_v751f"]
+
+[node name="SpinBox" unique_id=1329382132 instance=ExtResource("1_pjuyv")]
+script = ExtResource("2_v751f")
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="1" unique_id=1719940216]
+unique_name_in_owner = true
+layout_mode = 2

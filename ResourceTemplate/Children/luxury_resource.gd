@@ -1,0 +1,3 @@
+class_name LuxuryResource
+
+extends InventoryResource

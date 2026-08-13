@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://rktht6s1yqw1"]
+
+[ext_resource type="PackedScene" uid="uid://bb5apdnbq3htl" path="res://EditorTemplate/Protocol/protocol.tscn" id="1_wdt3k"]
+[ext_resource type="Script" uid="uid://barccomghni2o" path="res://EditorTemplate/Children/texture/texture_picker.gd" id="2_uc8fx"]
+
+[node name="Protocol" unique_id=1329382132 instance=ExtResource("1_wdt3k")]
+script = ExtResource("2_uc8fx")
+
+[node name="Control" type="Control" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="1" unique_id=395649469]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="TextureButton" type="Button" parent="HBoxContainer/Control" index="0" unique_id=922278381]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Texture" type="TextureRect" parent="HBoxContainer/Control" index="1" unique_id=595844783]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5

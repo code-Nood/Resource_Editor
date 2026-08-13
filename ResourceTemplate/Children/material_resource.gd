@@ -1,0 +1,3 @@
+class_name MaterialResource
+
+extends InventoryResource
