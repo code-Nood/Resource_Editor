@@ -4,7 +4,6 @@ extends DataResource
 
 #region exports
 @export var name :String
-@export var texture :Texture2D
 @export var description :String
 @export var price :int
 @export var can_sell :bool
@@ -18,6 +17,7 @@ extends DataResource
 
 
 static func generate_id(category: int ,existing_ids: Array) -> int:
+	
 	var base = category * 1000 
 	#分类基础值，如食物为1000系列
 	var max_serial = 0
