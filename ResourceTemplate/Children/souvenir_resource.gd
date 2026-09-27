@@ -60,4 +60,3 @@ func rotated_offsets(rot: Rot) -> Array[Vector2i]:
 			_:
 				result.append(off)
 	return result
-

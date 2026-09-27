@@ -5,6 +5,10 @@ extends Control
 @onready var template_selector:OptionButton = %OptionButton
 @onready var resource_list:VBoxContainer = %ItemList
 @onready var detail_container:VBoxContainer = %Detail
+@export var grid_inventory_editor:GridInventoryEditor
+
+## 请求打开格子编辑器：把“正在编辑的资源”传出去
+signal grid_edit_requested(res: Resource)
 
 # 预加载列表项场景
 var _list_item_scene: PackedScene = preload("res://EditorUI/MainPanel/resource_list_button.tscn")
@@ -41,6 +45,70 @@ func _ready():
 		template_selector.select(0)
 		_on_template_selected(0)
 	print("已注册模板：", TemplateRegistry.templates.keys())
+
+	# 连接“切换”按钮：打开格子编辑器
+	if has_node("Background/HBoxContainer/Grid"):
+		($Background/HBoxContainer/Grid as Button).pressed.connect(_on_grid_edit_pressed)
+
+	# 连接格子编辑器：信号 -> 打开；返回信号 -> 关闭
+	if grid_inventory_editor != null:
+		grid_edit_requested.connect(grid_inventory_editor.open_for)
+		grid_inventory_editor.back_requested.connect(_close_grid_editor)
+
+	# “非纪念品资源”警告：初始隐藏，Timer 到点后自动隐藏
+	if has_node("Warning"):
+		($Warning as Label).visible = false
+	if has_node("Warning/Timer"):
+		($Warning/Timer as Timer).one_shot = true
+		($Warning/Timer as Timer).timeout.connect(_on_warning_timeout)
+#endregion
+
+#region 格子编辑器切换
+## 点击“切换”：把当前编辑的资源交给格子编辑器打开
+func _on_grid_edit_pressed() -> void:
+	if _current_editing_res == null:
+		push_warning("没有正在编辑的资源，无法打开格子编辑器")
+		return
+	# 仅允许纪念品资源跳转到格子编辑器
+	if not _is_souvenir_script():
+		_show_warning()
+		return
+	# 先落盘，确保资源已持久化、有可靠实例
+	_flush_auto_save()
+	grid_edit_requested.emit(_current_editing_res)
+
+## 判断当前模板是否是纪念品资源（SouvenirResource 或其子类）
+func _is_souvenir_script() -> bool:
+	if current_script == null:
+		return false
+	if current_script == SouvenirResource:
+		return true
+	# 兼容继承自 SouvenirResource 的子类模板
+	var sample = current_script.new()
+	return sample is SouvenirResource
+
+## 显示“非纪念品”警告，并（重新）启动自动隐藏计时
+func _show_warning() -> void:
+	var warning := get_node_or_null("Warning") as Label
+	if warning == null:
+		return
+	warning.visible = true
+	var timer := get_node_or_null("Warning/Timer") as Timer
+	if timer != null:
+		timer.start()  # 重新计时：多次点击会重置
+
+## 警告计时到点：自动隐藏
+func _on_warning_timeout() -> void:
+	var warning := get_node_or_null("Warning") as Label
+	if warning != null:
+		warning.visible = false
+
+## 格子编辑器请求返回：关闭并刷新主面板资源列表
+func _close_grid_editor() -> void:
+	if grid_inventory_editor != null:
+		grid_inventory_editor.close()
+	# 返回后重新加载列表（形状编辑可能改动了数据）
+	refresh_list()
 #endregion
 
 #region 模板切换
@@ -118,6 +186,12 @@ func save_resource(res: Resource):
 	var type_name = template_selector.get_item_text(template_selector.selected)
 	var folder = _data_folder(type_name)
 	DirAccess.make_dir_recursive_absolute(folder)
+
+	# data_name 为空时，用创建时分配的 id 兜底填充，避免存成空名/无意义名
+	if res.get("data_name") != null and res.data_name.strip_edges() == "":
+		res.data_name = str(res.id)
+		# data_name 变化后同步刷新左侧列表按钮显示
+		_refresh_list_button(res)
 
 	var file_name: String
 	if res.has_method("get") and res.get("data_name") != null and res.data_name.strip_edges() != "":

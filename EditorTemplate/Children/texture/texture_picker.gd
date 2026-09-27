@@ -41,11 +41,15 @@ func _create_file_dialog() -> void:
 	file_dialog.canceled.connect(file_dialog.queue_free)
 	add_child(file_dialog)
 
-# ---- 选中文件 -> 加载并回传 ----
+# ---- 选中文件 -> 加载并回传（真包含：内嵌像素）----
 func _on_file_selected(path: String) -> void:
 	var tex := load(path) as Texture2D
 	if tex == null:
 		push_error("无法加载贴图：" + path)
 		return
+	# 真包含：提取像素并内嵌成 ImageTexture，避免依赖外部文件路径
+	var img := tex.get_image()
+	if img != null:
+		tex = ImageTexture.create_from_image(img.duplicate())
 	set_value(tex)
 	value_changed.emit(tex)

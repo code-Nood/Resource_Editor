@@ -1,4 +1,4 @@
-﻿class_name PropertyHelper
+class_name PropertyHelper
 extends RefCounted
 
 # Resource/Object 自带的内置属性，不应作为业务属性编辑

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://boucv16hj5ggb"]
+
+[ext_resource type="Script" uid="uid://buwxysmh5qe22" path="res://EditorUI/GridInventoryEditor/Children/grid_editor.gd" id="1_mu6wa"]
+
+[node name="GridEditor" type="GridContainer" unique_id=1836650959]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 6
+script = ExtResource("1_mu6wa")

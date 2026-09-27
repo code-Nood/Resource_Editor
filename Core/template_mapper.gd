@@ -34,6 +34,3 @@ func set_name_mapping(property_name: String, template_path: String) -> void:
 
 func remove_name_mapping(property_name: String) -> void:
 	name_mapping.erase(property_name)
-
-
-

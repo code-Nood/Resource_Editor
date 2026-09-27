@@ -6,7 +6,15 @@
 [node name="ResPicker" unique_id=1329382132 instance=ExtResource("1_4b080")]
 script = ExtResource("2_cyumv")
 
-[node name="Button" type="Button" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="1" unique_id=1771812591]
+[node name="Texture" type="TextureRect" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="1" unique_id=595844783]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="2" unique_id=1771812591]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30

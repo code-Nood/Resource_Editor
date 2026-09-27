@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dretowjr4rqa" path="res://EditorUI/MainPanel/main_panel.gd" id="1_j5yb5"]
 [ext_resource type="Theme" uid="uid://cwuqi316eis2j" path="res://Theme/UI_Theme.tres" id="2_s10hs"]
+[ext_resource type="PackedScene" uid="uid://h6k37ln0x3tu" path="res://EditorUI/GridInventoryEditor/GridInventoryEditor.tscn" id="3_s10hs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sp7mw"]
 bg_color = Color(0.9490196, 0.9411765, 0.9019608, 1)
 
-[node name="MainPanel" type="Control" unique_id=924275566]
+[node name="MainPanel" type="Control" unique_id=924275566 node_paths=PackedStringArray("grid_inventory_editor")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j5yb5")
+grid_inventory_editor = NodePath("GIE")
 
 [node name="Background" type="Panel" parent="." unique_id=55461867]
 layout_mode = 1
@@ -25,62 +27,54 @@ grow_vertical = 2
 theme = ExtResource("2_s10hs")
 
 [node name="Exit" type="Button" parent="Background" unique_id=1142974978]
-custom_maximum_size = Vector2(100, 100)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 100.0
+offset_left = -40.0
+offset_bottom = 40.0
 grow_horizontal = 0
-theme_override_font_sizes/font_size = 72
 text = "x"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Background" unique_id=737226334]
-custom_minimum_size = Vector2(280, 40)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -500.135
-offset_top = 20.0
-offset_right = 754.01
-offset_bottom = 239.0
+offset_left = -128.0
+offset_right = 128.0
+offset_bottom = 34.0
 grow_horizontal = 2
 alignment = 1
 
 [node name="New" type="Button" parent="Background/HBoxContainer" unique_id=1288679859]
-custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
 theme = ExtResource("2_s10hs")
-theme_override_font_sizes/font_size = 120
 text = "新建"
 
 [node name="Save" type="Button" parent="Background/HBoxContainer" unique_id=863635479]
-custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
 theme = ExtResource("2_s10hs")
-theme_override_font_sizes/font_size = 120
 text = "保存"
 
 [node name="Export" type="Button" parent="Background/HBoxContainer" unique_id=1170008987]
-custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
 theme = ExtResource("2_s10hs")
-theme_override_font_sizes/font_size = 120
 text = "导出"
 
 [node name="Clear" type="Button" parent="Background/HBoxContainer" unique_id=102505138]
-custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
-theme_override_font_sizes/font_size = 120
 text = "清除"
+
+[node name="Grid" type="Button" parent="Background/HBoxContainer" unique_id=1438237788]
+layout_mode = 2
+text = "切换"
 
 [node name="Panel" type="Panel" parent="." unique_id=2089523428]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 300.0
+offset_right = 60.0
 grow_vertical = 2
 theme = ExtResource("2_s10hs")
 theme_override_styles/panel = SubResource("StyleBoxFlat_sp7mw")
@@ -95,15 +89,16 @@ grow_vertical = 2
 
 [node name="OptionButton" type="OptionButton" parent="Panel/VBoxContainer" unique_id=1838364610]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 120)
+custom_maximum_size = Vector2(60, -1)
 layout_mode = 2
 theme = ExtResource("2_s10hs")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 6
 alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer" unique_id=1264459949]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("2_s10hs")
 
 [node name="ItemList" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer" unique_id=318603523]
 unique_name_in_owner = true
@@ -113,27 +108,29 @@ size_flags_vertical = 3
 
 [node name="Panel2" type="Panel" parent="." unique_id=1370568858]
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -1565.0
-offset_top = 260.0
-offset_right = -65.0
-grow_horizontal = 0
-grow_vertical = 2
+offset_left = -180.0
+offset_top = -200.0
+offset_right = 220.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel2" unique_id=1687787690]
+propagate_maximum_size = false
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 1500.0
+grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel2/HBoxContainer" unique_id=2027227998]
-custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -143,6 +140,26 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="GIE" parent="." unique_id=681316432 instance=ExtResource("3_s10hs")]
+visible = false
+layout_mode = 1
+
+[node name="Warning" type="Label" parent="." unique_id=802528459]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 40.0
+offset_right = 20.0
+offset_bottom = 63.000008
+grow_horizontal = 2
+text = "！！无法对纪念品以外的资源进行跳转！！"
+
+[node name="Timer" type="Timer" parent="Warning" unique_id=1086918678]
+wait_time = 0.5
 
 [connection signal="pressed" from="Background/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Background/HBoxContainer/New" to="." method="_on_new_resource_pressed"]

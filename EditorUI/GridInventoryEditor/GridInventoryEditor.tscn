@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://h6k37ln0x3tu"]
+
+[ext_resource type="Script" uid="uid://8alnyp142y6t" path="res://EditorUI/GridInventoryEditor/GridInventoryEditor.gd" id="1_qs3ep"]
+[ext_resource type="Theme" uid="uid://cwuqi316eis2j" path="res://Theme/UI_Theme.tres" id="2_vjgxy"]
+[ext_resource type="PackedScene" uid="uid://boucv16hj5ggb" path="res://EditorUI/GridInventoryEditor/Children/grid_editor.tscn" id="3_qrcqh"]
+
+[node name="GIE" type="Control" unique_id=681316432]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qs3ep")
+
+[node name="Background" type="Panel" parent="." unique_id=150585236]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_vjgxy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background" unique_id=689258202]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Hint" type="Label" parent="Background/VBoxContainer" unique_id=1161735442]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "现在正在编辑："
+
+[node name="ResourceName" type="Label" parent="Background/VBoxContainer" unique_id=186374131]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background" unique_id=284178332]
+custom_minimum_size = Vector2(40, 20)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_right = 100.0
+offset_bottom = 40.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="FileOpen" type="Button" parent="Background/HBoxContainer" unique_id=228447614]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "打开贴图"
+
+[node name="Clear" type="Button" parent="Background/HBoxContainer" unique_id=1579768814]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "清空选择"
+
+[node name="Save" type="Button" parent="Background/HBoxContainer" unique_id=1606605818]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "保存资源"
+
+[node name="Back" type="Button" parent="Background" unique_id=236931467]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+text = "<-"
+
+[node name="GridEditor" parent="." unique_id=1836650959 instance=ExtResource("3_qrcqh")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -220.0
+offset_right = 96.0
+offset_bottom = -27.999939
+grow_horizontal = 2
+grow_vertical = 0
+columns_count = null
+rows_count = null

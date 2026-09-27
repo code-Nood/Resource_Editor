@@ -6,6 +6,9 @@
 [node name="LineEdit" unique_id=1329382132 instance=ExtResource("1_bgh1x")]
 script = ExtResource("2_uj4l8")
 
+[node name="Label" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="0" unique_id=52365789]
+custom_minimum_size = Vector2(40, 20)
+
 [node name="LineEdit" type="LineEdit" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="1" unique_id=1372650954]
 unique_name_in_owner = true
 layout_mode = 2

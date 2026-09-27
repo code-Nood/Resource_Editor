@@ -22,10 +22,11 @@ TemplateMapper="*uid://cvf67n7v13acf"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/size/viewport_width=480
+window/size/viewport_height=270
+window/size/window_width_override=1920
+window/size/window_height_override=1080
+window/stretch/mode="viewport"
 
 [file_customization]
 
@@ -44,4 +45,5 @@ folder_colors={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
