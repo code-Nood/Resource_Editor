@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://e44odpk5sonc"]
+
+[ext_resource type="PackedScene" uid="uid://bb5apdnbq3htl" path="res://EditorTemplate/Protocol/protocol.tscn" id="1_6mcul"]
+[ext_resource type="Script" uid="uid://ymrgpdwlymil" path="res://EditorTemplate/Children/multiline/multiline_text.gd" id="2_ag7r4"]
+
+[node name="MultilineText" unique_id=1329382132 instance=ExtResource("1_6mcul")]
+script = ExtResource("2_ag7r4")
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer" parent_id_path=PackedInt32Array(1104624079) index="1" unique_id=1719940888]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+wrap_mode = 1
+scroll_fit_content_height = true

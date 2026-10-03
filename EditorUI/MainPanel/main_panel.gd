@@ -166,6 +166,70 @@ func _data_dir_name(type_name: String) -> String:
 func _data_folder(type_name: String) -> String:
 	return TemplateRegistry.workspace_root + "/data/" + _data_dir_name(type_name) + "/"
 
+#region id 唯一性工具（所有类型通用）
+## 扫描某类型数据目录，收集“实际落盘”的所有资源 id 与占用它们的文件名。
+## 返回 Dictionary：{ id(int): 文件名(String) }。反查文件名用于判断“是否就是自己”。
+## 注意：以磁盘扫描为准，不信内存 current_resources（可能漏掉未加载/未落盘的资源）。
+func _scan_disk_ids(type_name: String) -> Dictionary:
+	var result: Dictionary = {}
+	var folder := _data_folder(type_name)
+	var dir := DirAccess.open(folder)
+	if dir == null:
+		return result
+	dir.list_dir_begin()
+	var file := dir.get_next()
+	while file != "":
+		if file.ends_with(".tres"):
+			var res := load(folder + file) as Resource
+			if res != null and res.get("id") != null:
+				result[int(res.id)] = file
+		file = dir.get_next()
+	dir.list_dir_end()
+	return result
+
+## 为某类型资源生成一个不与磁盘现有 id 冲突的新 id。
+## 优先按分类段（DEFAULT_CATEGORY）自增；无分类常量时退化为“全局不撞”兜底。
+func generate_unique_id(script: Script, type_name: String) -> int:
+	var existing_ids: Array = _scan_disk_ids(type_name).keys()
+	var generated_id := 0
+	var const_map: Dictionary = script.get_script_constant_map()
+	if const_map.has("DEFAULT_CATEGORY"):
+		var cat: int = int(const_map["DEFAULT_CATEGORY"])
+		generated_id = InventoryResource.generate_id(cat, existing_ids)
+	else:
+		generated_id = 0
+		while existing_ids.has(generated_id):
+			generated_id += 1
+	while existing_ids.has(generated_id):
+		generated_id += 1
+	return generated_id
+
+## 落盘前校验：res 的 id 是否与本类型目录里“别的文件”撞车。
+## 返回空串表示通过；否则返回错误描述（含冲突文件名）。
+func assert_id_unique(res: Resource, type_name: String) -> String:
+	if res == null or res.get("id") == null:
+		return ""
+	var my_id := int(res.id)
+	var file_names := _scan_disk_ids(type_name)
+	if not file_names.has(my_id):
+		return ""
+	var other_file: String = file_names[my_id]
+	var self_name := _resolved_file_name(res)
+	if other_file == self_name:
+		return ""
+	return "id = %d 已被 %s 占用" % [my_id, other_file]
+
+## 按主面板同一套命名规则算出 res 将要保存的文件名（不含 .tres）
+func _resolved_file_name(res: Resource) -> String:
+	var base := ""
+	if res.get("data_name") != null and str(res.data_name).strip_edges() != "":
+		base = str(res.data_name).strip_edges()
+		base = base.replace("/", "_").replace("\\", "_").replace(":", "_")
+	if base == "":
+		base = "untitled_" + str(res.id)
+	return base + ".tres"
+#endregion
+
 func load_resources(type_name: String):
 	current_resources.clear()
 	var folder = _data_folder(type_name)
@@ -199,6 +263,13 @@ func save_resource(res: Resource):
 		file_name = file_name.replace("/", "_").replace("\\", "_").replace(":", "_")
 	else:
 		file_name = "untitled_" + str(res.id)
+	# 落盘前 id 唯一性兜底校验（所有类型通用）
+	var conflict := assert_id_unique(res, type_name)
+	if conflict != "":
+		push_warning("保存被拒绝：%s（%s）" % [conflict, file_name + ".tres"])
+		_show_warning()
+		return
+
 	var path = folder + file_name + ".tres"
 	ResourceSaver.save(res, path)
 	print("保存成功：", path)
@@ -244,16 +315,9 @@ func _on_new_resource_pressed() -> void:
 		push_error("无法实例化模板脚本：" + current_script.resource_path)
 		return
 
-	# 尝试自动生成 ID
-	var existing_ids = current_resources.map(func(r): return r.id)
-	var generated_id = 0
-
-	var const_map: Dictionary = current_script.get_script_constant_map()
-	if const_map.has("DEFAULT_CATEGORY"):
-		var cat: int = int(const_map["DEFAULT_CATEGORY"])
-		generated_id = InventoryResource.generate_id(cat, existing_ids)
-	else:
-		generated_id = 0
+	# 自动生成 ID：以磁盘实际占用为准，并做不撞兜底（所有类型通用）
+	var type_name := template_selector.get_item_text(template_selector.selected)
+	var generated_id := generate_unique_id(current_script, type_name)
 
 	new_res.id = generated_id
 
@@ -302,6 +366,16 @@ func build_detail_panel(res: Resource):
 			# icon/data_name 等变化后同步刷新左侧按钮显示
 			_refresh_list_button(res)
 			# 防抖：延迟保存，防抖期内继续编辑会重置计时
+			_queue_auto_save(res)
+		)
+		# 自包含打包：res_picker 选中 AtlasTexture 时，会一次性回传内嵌底图(full) + 引用底图的 atlas。
+		# 这里把这一对写回资源，前提是资源确实有对应字段（纪念品资源）。
+		editor.texture_pair_changed.connect(func(full_tex: Texture2D, atlas_tex: AtlasTexture):
+			if res.get("full_texture") != null:
+				res.set("full_texture", full_tex)
+			if res.get("atlas_texture") != null:
+				res.set("atlas_texture", atlas_tex)
+			_refresh_list_button(res)
 			_queue_auto_save(res)
 		)
 #endregion

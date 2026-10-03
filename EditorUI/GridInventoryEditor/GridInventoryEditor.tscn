@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://8alnyp142y6t" path="res://EditorUI/GridInventoryEditor/GridInventoryEditor.gd" id="1_qs3ep"]
 [ext_resource type="Theme" uid="uid://cwuqi316eis2j" path="res://Theme/UI_Theme.tres" id="2_vjgxy"]
 [ext_resource type="PackedScene" uid="uid://boucv16hj5ggb" path="res://EditorUI/GridInventoryEditor/Children/grid_editor.tscn" id="3_qrcqh"]
+[ext_resource type="Script" uid="uid://b6srgxuy4ri8n" path="res://EditorUI/GridInventoryEditor/Children/rot_preview.gd" id="4_rpv"]
 
 [node name="GIE" type="Control" unique_id=681316432]
 layout_mode = 3
@@ -37,6 +38,17 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 
+[node name="UsedCells" type="Label" parent="Background/VBoxContainer" unique_id=186374199]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "已占格数：0"
+
+[node name="ModeLabel" type="Label" parent="Background/VBoxContainer" unique_id=1453966879]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "当前模式："
+
 [node name="HBoxContainer" type="HBoxContainer" parent="Background" unique_id=284178332]
 custom_minimum_size = Vector2(40, 20)
 layout_mode = 1
@@ -49,11 +61,19 @@ offset_bottom = 40.0
 grow_horizontal = 2
 alignment = 1
 
-[node name="FileOpen" type="Button" parent="Background/HBoxContainer" unique_id=228447614]
+[node name="RotOption" type="OptionButton" parent="Background/HBoxContainer" unique_id=228447699]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
-text = "打开贴图"
+item_count = 4
+popup/item_0/text = "0°"
+popup/item_0/id = 0
+popup/item_1/text = "90°"
+popup/item_1/id = 1
+popup/item_2/text = "180°"
+popup/item_2/id = 2
+popup/item_3/text = "270°"
+popup/item_3/id = 3
 
 [node name="Clear" type="Button" parent="Background/HBoxContainer" unique_id=1579768814]
 custom_minimum_size = Vector2(40, 0)
@@ -66,6 +86,13 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "保存资源"
+
+[node name="Button" type="Button" parent="Background/HBoxContainer" unique_id=1183706875]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 5
+text = "切换拖动/
+编辑模式"
 
 [node name="Back" type="Button" parent="Background" unique_id=236931467]
 custom_minimum_size = Vector2(40, 40)
@@ -85,11 +112,28 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -96.0
+offset_left = -140.0
 offset_top = -220.0
-offset_right = 96.0
+offset_right = 52.0
 offset_bottom = -27.999939
 grow_horizontal = 2
 grow_vertical = 0
 columns_count = null
 rows_count = null
+
+[node name="RotPreview" type="Control" parent="." unique_id=1836650999]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -220.0
+offset_right = 52.0
+offset_bottom = -27.999939
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("4_rpv")
+

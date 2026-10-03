@@ -4,8 +4,8 @@
 
 [node name="EditorPanel" type="Panel" unique_id=2039795450 node_paths=PackedStringArray("color_rect", "coordinate_label", "button")]
 custom_minimum_size = Vector2(32, 32)
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 32.0
+offset_bottom = 32.0
 script = ExtResource("1_ayost")
 color_rect = NodePath("ColorRect")
 coordinate_label = NodePath("Coordinate Label")

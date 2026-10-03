@@ -3,6 +3,7 @@ extends Node
 var name_mapping :Dictionary = {
 	"icon": "res://EditorTemplate/Children/texture/texture_picker.tscn",
 	"texture": "res://EditorTemplate/Children/texture/texture_picker.tscn",
+	"description": "res://EditorTemplate/Children/multiline/multiline_text.tscn",
 }
 
 var hint_mapping :Dictionary = {

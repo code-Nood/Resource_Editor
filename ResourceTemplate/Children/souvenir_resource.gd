@@ -12,9 +12,6 @@ const DEFAULT_CATEGORY = GameEnums.InventoryCategory.SOUVENIR
 #   - shape_offsets 只存"除起始格外"的剩余格相对坐标（不存起始格）。
 #   - 旋转一律用 rotated_offsets() 公式现场计算，不硬编码 4 份坐标。
 
-## 包围盒尺寸（宽×高）。注意：不等于实际占格数，仅用于碰撞扫描范围。
-@export var size: Vector2i = Vector2i.ONE
-
 ## 基准方向（0°）下，除起始格之外的相对坐标数组。
 ## 例：5 格直角 L 形（起始格取直角拐点）→ [(0,1),(0,2),(1,2)]
 @export var shape_offsets: Array[Vector2i] = []
@@ -22,14 +19,14 @@ const DEFAULT_CATEGORY = GameEnums.InventoryCategory.SOUVENIR
 ## 物品静止摆放是否支持旋转（某些对称物品旋转无意义，可关掉）。
 @export var is_rotatable: bool = true
 
-## 展示大图（区别于 DataResource.icon 缩略图）。
+## 展示大图（区别于 DataResource.icon 缩略图），编辑器保存时内嵌像素（自包含）。
 @export var full_texture: Texture2D
+
+## 游戏端展示用：AtlasTexture 引用本资源自己的 full_texture（两端同资源，不碰外部 png）。
+@export var atlas_texture: AtlasTexture
 
 ## 贴图渲染时对准的格子锚点（=旋转轴心，默认起始格 (0,0)）。
 @export var visual_anchor: Vector2i = Vector2i.ZERO
-
-## 单个格子（单元格）在 UI 上的像素尺寸；0 表示用全局约定（GlobalConstants.CELL_SIZE）。
-@export var cell_size: Vector2i = Vector2i.ZERO
 
 ## 堆叠上限（>1 表示可堆叠，单片占格的物品通常为 1）。
 @export var stack_limit: int = 1
